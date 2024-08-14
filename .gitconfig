@@ -1,0 +1,17 @@
+[submodule]
+	fetchJobs = 2
+[user]
+	name = SOLORZANO JUAN JOSE (uiv06924)
+	email = juan.jose.solorzano.carrillo@vitesco.com
+[core]
+	editor = \"C:/Program Files (x86)/GitExtensions/GitExtensions.exe\" fileeditor
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[init]
+	defaultBranch = master
+	templateDir = C:/Users/uiv06924/git-templates
+[credential "https://gerrit.vitesco.io"]
+	provider = generic

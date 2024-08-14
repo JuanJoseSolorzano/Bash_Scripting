@@ -1,0 +1,30 @@
+#!/bin/bash
+
+export h02="https://github.vitesco.io/EnDS-Test-Automation/vt.prj.ford.foh02.sys_test.git"
+export g80="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.GM.G80.CVR.git"
+export contest="https://github.vitesco.io/EnDS-Test-Automation/VT.GEN.TOOL.CONTEST.git"
+export l="//vt1.vitesco.com/SMT/didt6804/99_Users/JuanJoseSolorzano/"
+export h02suite="vt.prj.ford.foh02.sys_test"
+export autocnf="set_TA_env.bat"
+export suitecnf="$h02suite/$autocnf"
+export h02sw="https://gerrit.vitesco.io/q/project:SW%252F10_PRJ%252FFOH02_0U0_000"
+
+# Git
+function mbr(){
+    branchName=$(git rev-parse --abbrev-ref HEAD)
+    echo $branchName
+}
+# POlarion
+function polarion(){
+    mainUrl="https://polarion.vitesco.io/polarion/#/project/FO020/"
+    if [ $1 ]; then 
+        request="$(echo $mainUrl)workitem?id=FO020-$1" 
+    else
+        request=$mainUrl
+    fi
+    start $request
+}
+function getstatus(){
+    echo "$(grep 'status' work/ta/cnf/cnf_prj/testenv_cnf/cnf_general.xml)"
+}
+
