@@ -1,0 +1,52 @@
+#!/bin/bash
+
+#Script arguments.
+args=":cf"
+#Help
+_usage_(){
+  echo "===================== {HELP PANNEL} =============================="
+  echo "Usage: $0 [-c <string|commit>] [-f <string|file>]" 
+  echo " -c : the git commit to add all changes."
+  echo " -f : the name file [root path] to add."
+  echo "Example:"
+  echo ">> git-push.sh -c 'my commit' -c '/home/repo/file1 "
+  echo "=================================================================="
+  exit 1; 
+}
+#Current git branch.
+BRANCH=$(git symbolic-ref --short HEAD)
+#Git repo synchronization.
+synch_remote(){
+    echo ">> Synch repo"
+    git pull --all
+}
+#command options
+while getopts ${args} opt; do
+    case ${opt} in
+        c) 
+            echo "Option one"
+            echo ">> The '$2' comment has been set."
+            synch_remote
+            git add .
+            git commit -m "$2"
+            git push origin $BRANCH
+            ;;
+        f)
+            echo "Option one"
+            echo ">> The '$3' comment has been set."
+            synch_remote
+            git add $2
+            git commit -m $3
+            git push origin $BRANCH
+            ;;
+        ?)
+            echo "Invalid option: -${OPTARG}."
+            _usage_
+            exit 1
+            ;;
+    esac
+done
+#if any argument given
+#if ! [[ "${c}" ]]; then
+#  _usage_
+#fi

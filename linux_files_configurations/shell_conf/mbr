@@ -1,0 +1,7 @@
+#!/bin/bash
+
+current_branch=$(git symbolic-ref --short HEAD)
+
+echo ${current_branch}
+
+

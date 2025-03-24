@@ -1,0 +1,9 @@
+#!/bin/bash  
+  
+time=$(curl --silent "http://worldtimeapi.org/api/timezone/America/Mexico_City" | jq | grep '"datetime"' | awk '{print $2}')
+  
+hrs_time=$(echo $time | tr 'T' ' ' | tr '.' ' ' | awk '{print $2}')
+date=$(echo $time | tr 'T' ' ' | tr '.' ' ' | awk '{print $1}')
+date=$(echo $date | tr '"' ' ' | xargs)
+
+sudo date -s "$date $hrs_time"
