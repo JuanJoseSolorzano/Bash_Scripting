@@ -6,6 +6,7 @@
 # with this software. 
 # If not, see <https://creativecommons.org/public
 
+# testing
 # /etc/bash.bashrc: executed by bash(1) for interactive shells.
 RED='\033[0;31m'
 BLUE='\034[0;31m'
