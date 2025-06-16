@@ -20,7 +20,9 @@ function ctrl_c {
     echo "$FOUND files modified"
     exit 1
 }
-
+function prn {
+    echo "testing"
+}
 # Search for cnfPar files in the .tex files
 #for cnfPar in $(ls target_folder); do 
 #    grep "$pattern" "target_folder/$cnfPar" | 
