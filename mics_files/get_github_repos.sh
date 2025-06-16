@@ -17,6 +17,8 @@
 # -C: Clone all the repositories.
 #===================================================================================================================
 
+# Commenting the script to avoid escape sequences.
+
 gitHub_server="https://github.com"
 count_repos=false
 clone_repos=false
