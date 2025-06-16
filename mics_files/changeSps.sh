@@ -8,6 +8,7 @@
 # Dependencies: searchForFiles.sh, searchForPattern.sh, changeString.sh
 #=================================================================================================#
 
+# Variables
 CURR_DIR=$(pwd)
 NOT_FOUND=3
 FOUND=0
