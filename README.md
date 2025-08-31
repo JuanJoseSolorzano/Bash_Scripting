@@ -1,7 +1,7 @@
 # Bash Scripting
 
 ## Overview
-
+#test only
 This folder contains various Bash scripts for automation, system tasks, and other utilities. Each script is designed to perform a specific function, and they can be used individually or combined to create more complex workflows.
 The main goal of this is practicing the bash scripting.
 
