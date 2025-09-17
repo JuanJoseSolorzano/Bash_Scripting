@@ -1,5 +1,13 @@
-#!bin/bash
+#!/bin/bash
 # Author: Solorzano, Juan Jose
+
+RED='\033[0;31m'
+BLUE='\034[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+END_COLOR='\033[0m'
+# change to ~ directory.
+source ~/.myconf #environment configuration.
 
 ENDCOLOR='\[\e[0m\]'
 BLACK='\[\e[0;30m\]'
@@ -30,6 +38,11 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM=auto
 
+# Aliases
+alias ll="ls -la"
+alias delete="rm -fr"
+
+# Shows the current git branch and status
 function git_ps1 {
     local gitStatus branchName branchStatus
     local showStatus unstaged untracked stash nothing
@@ -70,12 +83,52 @@ function git_ps1 {
     fi
 }
 
+function git-update {
+    git diff origin/$1 --name-status | grep -v -E "$2"
+}
+
+function temp {
+    cd ~/temp/
+}
+
+# Change to project directory.
 function prj {
-    find /d -type d -name "$1" -print -quit
+    project_name=$1
+    list_=$2
+    if [[ -z "$project_name" ]]; then
+        printf "Project name is required\n"
+        return 1
+    fi
+    ret_path=$(find /d/p_ta3 -type d -iname "$1" -print -quit)
+    if [[ -z "$ret_path" ]]; then
+        printf "Project not found\n %s" "$ret_path"
+    else
+        cd $ret_path
+    fi
 }
 
 function repo {
-    echo ">> No implemented yet."
+    repo_name=$1
+    if [[ -z "$repo_name" ]]; then
+        printf "Repository name is required\n"
+        printf "repo <name>\n"
+        return 1
+    fi
+    declare -A repos
+    repos["G90"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.GM.G90.CVR"
+    repos["G80"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.GM.G80.CVR"
+    repos["G70"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.GM.G70.CVR"
+    repos["FC1"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.FORD.FC1.REGR_TEST"
+    repos["FB0"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.FORD.FB0.REGR_TEST"
+    repos["FB1"]="https://gitlab-ec-na.aws1583.vitesco.io/ec/se/aet/tas/ford/fofb0_ta_suite"
+    repos["G55"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.GM.G55.FAST"
+    repos["G56"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.GM.G56.VVMAL"
+    repos["CONTEST"]="https://github.vitesco.io/EnDS-Test-Automation/VT.GEN.TOOL.CONTEST"
+    repos["FC1_"]="https://github.vitesco.io/uiv06924/fo_fc1_ta_suite"
+    repos["H02"]="https://github.vitesco.io/EnDS-Test-Automation/vt.prj.ford.foh02.sys_test"
+    repos["myrecorder"]="https://github.vitesco.io/uiv06924/MyRecorder"
+    repos["AUTOCNF"]="https://github.vitesco.io/EnDS-Test-Automation/VT.PRJ.AUTO_CNF_TOOL"
+    echo "${repos["G80"]}"
 }
 
 function up {
@@ -85,4 +138,22 @@ function up {
     done;
 }
 
-export PS1="${CYAN}📂\w${ENDCOLOR}${MAGENTA}\$(git_ps1)${ENDCOLOR}🐧> "
+function rc {
+    printf '\e[6 q'
+}
+
+function getFolderName {
+    folderName=$(echo $(pwd) | awk -F'/' '{print $NF}')
+    printf "$folderName"
+}
+
+function my_prompt {
+    isRepo=$(git rev-parse --is-inside-work-tree 2>/dev/null)
+    if [[ -z $isRepo ]]; then
+        export PS1="${CYAN}📂\w${ENDCOLOR}${MAGENTA}\$(git_ps1)${ENDCOLOR}/🐧> "
+    else
+        export PS1="${CYAN}📂\$(getFolderName)${ENDCOLOR}${MAGENTA}\$(git_ps1)${ENDCOLOR}/🐧> "
+    fi
+}
+
+PROMPT_COMMAND=my_prompt
